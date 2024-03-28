@@ -4,21 +4,22 @@ title: Rendering Lists
 
 <Intro>
 
-You will often want to display multiple similar components from a collection of data. You can use the [JavaScript array methods](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array#) to manipulate an array of data. On this page, you'll use [`filter()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) and [`map()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/map) with React to filter and transform your array of data into an array of components.
+অনেক সময় আপনি কিছু তথ্য থেকে একই ধরণের একাধিক  কম্পোনেন্ট দেখাতে চাইবেন। এর জন্য আপনি  [JavaScript array methods](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array#) ব্যাবহার করে তথ্যগুলো কাজে লাগাতে পারেন। 
+এখানে,  React  এর সাথে  [`filter()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) আর  [`map()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/map) ব্যাবহার করে আপনার তথ্য গুলো বাছাই আর পরিবর্তন করে একটি component এর array বানাতে পারেন।  
 
 </Intro>
 
 <YouWillLearn>
 
-* How to render components from an array using JavaScript's `map()`
-* How to render only specific components using JavaScript's `filter()`
-* When and why to use React keys
+* কিভাবে Javascript এর map() ব্যাবহার করে একটি array থেকে কম্পোনেন্ট নিয়ে Render করবেন
+* কিভাবে Javascript এর filter() ব্যাবহার করে একটি array থেকে নির্দিষ্ট কম্পোনেন্ট নিয়ে Render করবেন
+* কখন এবং কেন React keys ব্যবহার করবেন 
 
 </YouWillLearn>
 
-## Rendering data from arrays {/*rendering-data-from-arrays*/}
+## Array থেকে তথ্য নিয়ে Render করা {/*rendering-data-from-arrays*/}
 
-Say that you have a list of content.
+ধরুন আপনার কাছে content এর একটি তালিকা আছে
 
 ```js
 <ul>
@@ -30,11 +31,13 @@ Say that you have a list of content.
 </ul>
 ```
 
-The only difference among those list items is their contents, their data. You will often need to show several instances of the same component using different data when building interfaces: from lists of comments to galleries of profile images. In these situations, you can store that data in JavaScript objects and arrays and use methods like [`map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) and [`filter()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) to render lists of components from them.
+এই তালিকার item গুলোর মধ্যে পার্থক্য হল তাদের content আর তথ্য। প্রায়ই আপনাকে  আলাদা তথ্য দিয়ে একই component কে বারবার দেখানো লাগতে পারে: যেমন কমেন্ট এর তালিকা, profile ছবির গ্যালারী। এই অবস্থায় আপনি এই তথয গুলো Javascript object বা array তে রাখতে পারেন এবং 
+[`map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) আর  [`filter()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) মেথড ব্যাবহার করে component এর তালিকা 
+তৈরি করে দেখাতে পারেন।
 
-Here’s a short example of how to generate a list of items from an array:
+কিভাবে array থেকে item এর তালিকা বানাবেন তার একটি ছোট উদাহরণ দেখানো হল এখানে :
 
-1. **Move** the data into an array:
+1. তথ্য গুলো একটি array তে নিন 
 
 ```js
 const people = [
@@ -46,19 +49,19 @@ const people = [
 ];
 ```
 
-2. **Map** the `people` members into a new array of JSX nodes, `listItems`:
+2. `people` এর member দের **Map** করে JSX nodes এর একটি নতুন array তে রাখুন, যার নাম `listItems` :  
 
 ```js
 const listItems = people.map(person => <li>{person}</li>);
 ```
 
-3. **Return** `listItems` from your component wrapped in a `<ul>`:
+3. `listItems` কে একটি `<ul>`  এর মধ্যে নিয়ে আপনার component থেকে  **Return** করুন :
 
 ```js
 return <ul>{listItems}</ul>;
 ```
 
-Here is the result:
+ফলাফল:
 
 <Sandpack>
 
@@ -85,7 +88,7 @@ li { margin-bottom: 10px; }
 
 </Sandpack>
 
-Notice the sandbox above displays a console error:
+লক্ষ্য করুন sandbox এর উপরে একটি console এরর দেখা যাচ্ছে :
 
 <ConsoleBlock level="error">
 
@@ -93,11 +96,10 @@ Warning: Each child in a list should have a unique "key" prop.
 
 </ConsoleBlock>
 
-You'll learn how to fix this error later on this page. Before we get to that, let's add some structure to your data.
+এই এরর টিকে কিভাবে সমাধান করতে হয় তা আপনি এই পেজ এর পরের দিকে শিখবেন। চলুন আপনার তথ্য গুলো গোছানো যাক:
+## array এর item কে filter করা {/*filtering-arrays-of-items*/}
 
-## Filtering arrays of items {/*filtering-arrays-of-items*/}
-
-This data can be structured even more.
+এই তথ্য গুলো আরও সুন্দর ভাবে গোছানো যাবে 
 
 ```js
 const people = [{
@@ -121,11 +123,13 @@ const people = [{
 }];
 ```
 
-Let's say you want a way to only show people whose profession is `'chemist'`. You can use JavaScript's `filter()` method to return just those people. This method takes an array of items, passes them through a “test” (a function that returns `true` or `false`), and returns a new array of only those items that passed the test (returned `true`).
+ধরা যাক আপনি কোন ভাবে শুধু সেই বযাক্তিদের দেখাতে চান যাদের profession `chemist`। আপনি    Javascript এর `filter()` মেথড বযাবহার করে শুধু সেই বযাক্তিদের দেখাতে পারেন। এই মেথডটি কিছু item এর array নিয়ে সেই item গুলোর উপরে কোন একটি (test) পরিক্ষা চালায় (test একটি function যেটা `true` অথবা `false` return করে), তারপর সেখান থেকে যেই item গুলোর জন্য `true` return করেছে তাদের নতুন একটি array তৈরি করে দেয়।
 
-You only want the items where `profession` is `'chemist'`. The "test" function for this looks like `(person) => person.profession === 'chemist'`. Here's how to put it together:
+আপনি শুধু সেই item গুলো চান যাদের `profession` এর মান `chemist` । এর জনয যে `test` function তা হচ্ছে `(person) => person.profession === 'chemist'`।
+সম্পূর্ণ টা একসাথে : 
 
-1. **Create** a new array of just “chemist” people, `chemists`, by calling `filter()` on the `people` filtering by `person.profession === 'chemist'`:
+
+1.  শুধুমাত্র  `chemist` দের নিয়ে একটি array তৈরি করুন, এটা করা যাবে `people` array এর উপর `filter()` করে `person.profession === 'chemist'` er মাদ্ধমে  :
 
 ```js
 const chemists = people.filter(person =>
@@ -133,7 +137,7 @@ const chemists = people.filter(person =>
 );
 ```
 
-2. Now **map** over `chemists`:
+2. এবার `chemist` এর উপর **map** করুন :
 
 ```js {1,13}
 const listItems = chemists.map(person =>
@@ -151,7 +155,7 @@ const listItems = chemists.map(person =>
 );
 ```
 
-3. Lastly, **return** the `listItems` from your component:
+3. শেষে, component থেকে `listItems`  **return** করুন:
 
 ```js
 return <ul>{listItems}</ul>;
@@ -244,7 +248,7 @@ img { width: 100px; height: 100px; border-radius: 50%; }
 
 <Pitfall>
 
-Arrow functions implicitly return the expression right after `=>`, so you didn't need a `return` statement:
+Arrow functions এর ক্ষেত্রে `=>` এর পর যে expression থাকে তার জনয return লেখার প্রয়োজন হয় না । তাই আপনার এখানে return লেখার দরকার নেই :
 
 ```js
 const listItems = chemists.map(person =>
@@ -252,7 +256,7 @@ const listItems = chemists.map(person =>
 );
 ```
 
-However, **you must write `return` explicitly if your `=>` is followed by a `{` curly brace!**
+কিন্তু, ** যদি `=>` এর পর `{` কারলি ব্রেস  থাকে তবে অবশ্যই `return` লিখতে হবে **
 
 ```js
 const listItems = chemists.map(person => { // Curly brace
@@ -260,13 +264,14 @@ const listItems = chemists.map(person => { // Curly brace
 });
 ```
 
-Arrow functions containing `=> {` are said to have a ["block body".](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#function_body) They let you write more than a single line of code, but you *have to* write a `return` statement yourself. If you forget it, nothing gets returned!
+
+arrow function এর `=>{` কে বলা হয় ["block body".](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#function_body) যেটা আপনাকে এক লাইনের বেশি লাইনে কোড লিখতে দেয়, সেক্ষেত্রে আপনাকে **অবশ্যই** `return` statement লিখতে হবে । যদি লিখতে ভুলে যান তাহলে function থেকে কিছুই return করবেনা। 
 
 </Pitfall>
 
-## Keeping list items in order with `key` {/*keeping-list-items-in-order-with-key*/}
+## `key`বযাবহার করে তালিকার item এর ক্রম একই রাখা {/*keeping-list-items-in-order-with-key*/}
 
-Notice that all the sandboxes above show an error in the console:
+লক্ষ্য করে দেখুন উপরে সব sandbox এর কনসোল এ একটি এরর দেখা যাচ্ছে 
 
 <ConsoleBlock level="error">
 
@@ -274,7 +279,7 @@ Warning: Each child in a list should have a unique "key" prop.
 
 </ConsoleBlock>
 
-You need to give each array item a `key` -- a string or a number that uniquely identifies it among other items in that array:
+আপনাকে array এর প্রতিটা item কে একটি `key` দিতে হবে --একটি স্ট্রিং অথবা একটি সংখ্যা যেটা ঐ array এর অন্য সবগুলো item কে দেওয়া `key` থেকে অনন্য হবে:
 
 ```js
 <li key={person.id}>...</li>
@@ -282,13 +287,13 @@ You need to give each array item a `key` -- a string or a number that uniquely i
 
 <Note>
 
-JSX elements directly inside a `map()` call always need keys!
+`map()` এর মধ্যে থাকা JSX elements এর সবসময় keys দরকার হয়
 
 </Note>
 
-Keys tell React which array item each component corresponds to, so that it can match them up later. This becomes important if your array items can move (e.g. due to sorting), get inserted, or get deleted. A well-chosen `key` helps React infer what exactly has happened, and make the correct updates to the DOM tree.
+keys এর মাদ্ধমে React বুঝতে পারে যে কোন component এর সাথে কোন  array item সম্পর্কিত, যার ফলে পরে তাদেরকে মেলাতে পারে। এটা আরও গুরুত্বপূর্ণ হয় যখন array items পরিবর্তন হয় (যেমন সর্টিং এর কারণে), নতুন item array তে প্রবেশ করালে, অথবা মুছে ফেললে। একটি ভালভাবে বেছে নেওয়া `key` React কে অনুমান করতে সাহায্য করে আসলে কি ঘটেছে, আর তারপর DOM tree তে সঠিকভাবে হালনাগাদ করতে সাহায্য করে । 
 
-Rather than generating keys on the fly, you should include them in your data:
+key তৈরি করার পরিবর্তে, আপনার সেগুলিকে আপনার তত্থে অন্তর্ভুক্ত করা উচিত।
 
 <Sandpack>
 
@@ -374,11 +379,11 @@ img { width: 100px; height: 100px; border-radius: 50%; }
 
 <DeepDive>
 
-#### Displaying several DOM nodes for each list item {/*displaying-several-dom-nodes-for-each-list-item*/}
+#### প্রতিটি তালিকার item এর জনয কয়েকটি DOM nodes প্রদর্শন করানো {/*displaying-several-dom-nodes-for-each-list-item*/}
 
-What do you do when each item needs to render not one, but several DOM nodes?
+প্রতিটি item একের অধিক DOM nodes Render করতে চাইলে কি করবেন ?
 
-The short [`<>...</>` Fragment](/reference/react/Fragment) syntax won't let you pass a key, so you need to either group them into a single `<div>`, or use the slightly longer and [more explicit `<Fragment>` syntax:](/reference/react/Fragment#rendering-a-list-of-fragments)
+সংক্ষিপ্ত সিনট্যাক্স  [`<>...</>` Fragment](/reference/react/Fragment) এ আপনি key দিতে পারবেন না, তাই আপনাকে তালিকা item গুলোকে গ্রুপ করে  একটি `<div>` এর মধ্যে দিতে হবে অথবা আপনাকে একটু দীর্ঘ [ আরও বিস্তারিত ভাবে  `<Fragment>` syntax:](/reference/react/Fragment#rendering-a-list-of-fragments) ব্যাবহার করতে হবে । 
 
 ```js
 import { Fragment } from 'react';
@@ -393,15 +398,15 @@ const listItems = people.map(person =>
 );
 ```
 
-Fragments disappear from the DOM, so this will produce a flat list of `<h1>`, `<p>`, `<h1>`, `<p>`, and so on.
+DOM থেকে Fragments হারিয়ে যায়, তাই এখানে  `<h1>`, `<p>`, `<h1>`, `<p>` এর মত একটি তালিকা তৈরি হবে । 
 
 </DeepDive>
 
-### Where to get your `key` {/*where-to-get-your-key*/}
+### `key` কোথায় পাওয়া যাবে {/*where-to-get-your-key*/}
 
-Different sources of data provide different sources of keys:
+বিভিনয উপাত্তের উৎস থেকে ভিনয keys পাওয়া যায় 
 
-* **Data from a database:** If your data is coming from a database, you can use the database keys/IDs, which are unique by nature.
+*  ** ডাটাবেস থেকে তথ্য নিয়ে : ** যদি আপনার তথ্য কোন ডাটাবেস থেকে পেয়ে থাকেন তাহলে আপনি ঐ ডাটাবেস এর key/ID গুলো ব্যাবহার করতে পারেন যেগুলো প্রকৃতিগত ভাব্যেই অনন্য । 
 * **Locally generated data:** If your data is generated and persisted locally (e.g. notes in a note-taking app), use an incrementing counter, [`crypto.randomUUID()`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID) or a package like [`uuid`](https://www.npmjs.com/package/uuid) when creating items.
 
 ### Rules of keys {/*rules-of-keys*/}
