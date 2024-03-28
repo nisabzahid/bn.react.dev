@@ -7,7 +7,7 @@ title: renderToStaticMarkup
 `renderToStaticMarkup` একটি নন-ইন্টার‍্যাক্টিভ React ট্রি কে একটি HTML স্ট্রিং এ রেন্ডার করে।
 
 ```js
-const html = renderToStaticMarkup(reactNode)
+const html = renderToStaticMarkup(reactNode, options?)
 ```
 
 </Intro>
@@ -18,7 +18,7 @@ const html = renderToStaticMarkup(reactNode)
 
 ## রেফারেন্স {/*reference*/}
 
-### `renderToStaticMarkup(reactNode)` {/*rendertostaticmarkup*/}
+### `renderToStaticMarkup(reactNode, options?)` {/*rendertostaticmarkup*/}
 
 সার্ভারে, আপনার অ্যাপটি HTML এ রেন্ডার করার জন্য কল করুন `renderToStaticMarkup`।
 
@@ -35,6 +35,8 @@ const html = renderToStaticMarkup(<Page />);
 #### প্যারামিটার {/*parameters*/}
 
 * `reactNode`: একটা React নোড যা আপনি HTML এ রেন্ডার করতে চান। উদাহরণস্বরূপ, `<Page />` এর মত একটি JSX নোড।
+* **optional** `options`: সার্ভার রেন্ডারের জন্য একটি অবজেক্ট।
+  * **optional** `identifierPrefix`: [`useId`](/reference/react/useId) দিয়ে বানানো ID এর জন্য React যে স্ট্রিং প্রিফিক্স ব্যবহার করে। একই পেইজে একাধিক রুট ব্যবহার করলে কনফ্লিক্ট এড়াতে এটা কাজে লাগে।
 
 #### রিটার্ন {/*returns*/}
 

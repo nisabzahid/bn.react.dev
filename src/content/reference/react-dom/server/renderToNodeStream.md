@@ -13,7 +13,7 @@ title: renderToNodeStream
 `renderToNodeStream` একটি React ট্রি কে একটি [Node.js Readable Stream](https://nodejs.org/api/stream.html#readable-streams) এ রেন্ডার করে।
 
 ```js
-const stream = renderToNodeStream(reactNode)
+const stream = renderToNodeStream(reactNode, options?)
 ```
 
 </Intro>
@@ -24,7 +24,7 @@ const stream = renderToNodeStream(reactNode)
 
 ## রেফারেন্স {/*reference*/}
 
-### `renderToNodeStream(reactNode)` {/*rendertonodestream*/}
+### `renderToNodeStream(reactNode, options?)` {/*rendertonodestream*/}
 
 সার্ভারে, [Node.js Readable Stream](https://nodejs.org/api/stream.html#readable-streams) পাবার জন্য `renderToNodeStream` কল করুন, যেটা আপনি রেসপন্সের মধ্যে pipe করে দিতে পারবেন।
 
@@ -42,6 +42,9 @@ stream.pipe(response);
 #### প্যারামিটার {/*parameters*/}
 
 * `reactNode`: একটা React নোড যেটা আপনি HTML এ রেন্ডার করতে চান। উদাহরণস্বরূপ, `<App />` এর মত একটি JSX এলিমেন্ট।
+
+* **optional** `options`: সার্ভার রেন্ডারের জন্য একটি অবজেক্ট।
+  * **optional** `identifierPrefix`: [`useId`](/reference/react/useId) দিয়ে বানানো ID এর জন্য React যে স্ট্রিং প্রিফিক্স ব্যবহার করে। একই পেইজে একাধিক রুট ব্যবহার করলে কনফ্লিক্ট এড়াতে এটা কাজে লাগে। এটা আর [`hydrateRoot`](/reference/react-dom/client/hydrateRoot#parameters) এ pass করা প্রিফিক্স একই হতে হবে।
 
 #### রিটার্ন {/*returns*/}
 
